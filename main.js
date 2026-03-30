@@ -2,7 +2,7 @@ const { app, Tray , Menu , globalShortcut, clipboard , nativeImage,BrowserWindow
 const path = require('path');
 const screenshot = require('screenshot-desktop');
 let tray ;
-
+//hello
 async function takeScreenshot() {
   const img = await screenshot({ format: 'png' });
 
@@ -13,7 +13,7 @@ async function takeScreenshot() {
 }
 
 app.whenReady().then(() => {
-  console.log("Snapvainshrunning")
+console.log("Snapvainshrunning")
 tray = new Tray(path.join(__dirname, 'icon.png'))
 
     const contextMenu = Menu.buildFromTemplate([
