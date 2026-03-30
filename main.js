@@ -1,18 +1,34 @@
-const { app, BrowserWindow } = require('electron');
+const { app, Tray , Menu , globalShortcut} = require('electron');
+const path = require('path');
+const screenshot = require('screenshot-desktop');
+let tray ;
+const fs = require('fs');
+const os = require('os');
 
-function createWindow() {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600
-  });
-
-  win.loadURL('https://google.com');
+async function takeScreenshot() {
+  const img = await screenshot({ format: 'png' });
+  console.log("Screenshot captured ✅");
 }
 
 app.whenReady().then(() => {
-  createWindow();
+  console.log("Snapvainshrunning")
+tray = new Tray(path.join(__dirname, 'icon.png'))
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
+    const contextMenu = Menu.buildFromTemplate([
+    { label: 'Take Screenshot', click: () => takeScreenshot() },
+    { label: 'Quit', click: () => app.quit() }
+  ]);
+
+  tray.setToolTip('SnapVanish');
+  tray.setContextMenu(contextMenu);
+
+  globalShortcut.register('CommandOrControl+Alt+X', () => {
+  console.log("Shortcut pressed 🚀");
+  takeScreenshot();
+});
+
+});
+
+app.on('window-all-closed', (e) => {
+  e.preventDefault();
 });
