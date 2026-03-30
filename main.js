@@ -1,13 +1,15 @@
-const { app, Tray , Menu , globalShortcut} = require('electron');
+const { app, Tray , Menu , globalShortcut, clipboard , nativeImage,BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const screenshot = require('screenshot-desktop');
 let tray ;
-const fs = require('fs');
-const os = require('os');
 
 async function takeScreenshot() {
   const img = await screenshot({ format: 'png' });
-  console.log("Screenshot captured ✅");
+
+  const image = nativeImage.createFromBuffer(img);
+  clipboard.writeImage(image);
+
+  console.log("Copied to clipboard ✅");
 }
 
 app.whenReady().then(() => {
@@ -25,10 +27,45 @@ tray = new Tray(path.join(__dirname, 'icon.png'))
   globalShortcut.register('CommandOrControl+Alt+X', () => {
   console.log("Shortcut pressed 🚀");
   takeScreenshot();
+  createUI() ;
 });
 
 });
 
 app.on('window-all-closed', (e) => {
   e.preventDefault();
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
+});
+
+
+function createUI() {
+  const win = new BrowserWindow({
+    width: 300,
+    height: 300,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+    
+  });
+
+win.loadFile(path.join(__dirname, 'ui', 'index.html'));
+}
+
+
+
+ipcMain.on('capture-full', () => {
+  takeScreenshot();
+});
+
+ipcMain.on('capture-area', () => {
+  console.log("Area selection clicked");
+});
+
+ipcMain.on('quit-app', () => {
+  app.quit();
 });

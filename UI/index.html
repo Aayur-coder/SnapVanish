@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SnapVanish</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #121212;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: 200px;
+      padding: 12px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #1f6feb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #388bfd;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>SnapVanish</h1>
+
+  <button onclick="capture()">Capture Screenshot</button>
+  <button onclick="selectArea()">Area Selection</button>
+  <button onclick="quit()">Exit</button>
+
+  <script src="ui.js"></script>
+</body>
+</html>
