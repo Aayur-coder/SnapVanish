@@ -16,7 +16,7 @@ SnapVanish is a lightweight desktop tool that lets you capture a screenshot and 
 
 ## ⚡ How it Works
 
-1. Press the shortcut (Ctrl + Shift + S)
+1. Press the shortcut (Ctrl + alt +X)
 2. Screenshot is captured in memory
 3. Used for processing/search
 4. Automatically discarded
